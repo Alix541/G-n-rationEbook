@@ -21,7 +21,7 @@ model = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
 scenario=categorie.tirer_scenario()
 
-#Génération de la Trame, en 5 lignes
+#Génération du shema narratif
 
 message = [
     SystemMessage("Ecrit la trame principal en un paragraphe de 5 lignes maximum"),
@@ -49,7 +49,7 @@ print(PersonnageDict)
 #Génération du scenario des péripécie
 
 message = [
-    
+    SystemMessage()
 ]
 
 """
