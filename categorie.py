@@ -10,9 +10,8 @@ structure_romans = [
         "cadre": {"lieu": "Campagne historique", "temps": "Passé"},
         "nombre_chapitres": 12,
         "caracteres_par_chapitre": 6250,
-        "schema_principal": "Schéma cadre (récit enchâssé)",
-        "schema_complementaire": "Schéma classique (5 étapes)",
-        "exemple_œuvre": "Les Liaisons dangereuses"
+        "schema_principal": "SchemaNarratifCadre",
+        "schema_complementaire": "SchemaNarratifClassique",
     },
     {
         "nom": "Thriller psychologique contemporain",
@@ -24,9 +23,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 15,
         "caracteres_par_chapitre": 5000,
-        "schema_principal": "Schéma fragmenté (multi-POV)",
-        "schema_complementaire": "Pyramide de Freytag",
-        "exemple_œuvre": "Gone Girl"
+        "schema_principal": "SchemaNarratifFragmenté",
+        "schema_complementaire": "SchemaNarratifFreytag",
     },
     {
         "nom": "Science-fantasy épique",
@@ -38,9 +36,8 @@ structure_romans = [
         "cadre": {"lieu": "Univers inventé", "temps": "Intemporel"},
         "nombre_chapitres": 10,
         "caracteres_par_chapitre": 7500,
-        "schema_principal": "Voyage du héros (Campbell)",
-        "schema_complementaire": "Schéma actanciel (Greimas)",
-        "exemple_œuvre": "Dune"
+        "schema_principal": "VoyageDuHeros",
+        "schema_complementaire": "SchemaActanciel",
     },
     {
         "nom": "Uchronie philosophique",
@@ -52,9 +49,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Futur"},
         "nombre_chapitres": 14,
         "caracteres_par_chapitre": 5357,
-        "schema_principal": "In medias res",
-        "schema_complementaire": "Schéma quinaire (Larivaille)",
-        "exemple_œuvre": "Le Maître du Haut Château"
+        "schema_principal": "SchemaNarratifInMediasRes",
+        "schema_complementaire": "SchemaQuinaire",
     },
     {
         "nom": "Romantasy lyrique pour jeunes adultes",
@@ -66,9 +62,8 @@ structure_romans = [
         "cadre": {"lieu": "Univers inventé", "temps": "Intemporel"},
         "nombre_chapitres": 15,
         "caracteres_par_chapitre": 5000,
-        "schema_principal": "Flashback",
-        "schema_complementaire": "Schéma actanciel",
-        "exemple_œuvre": "La Sélection"
+        "schema_principal": "SchemaNarratifFlashback",
+        "schema_complementaire": "SchemaActanciel",
     },
     {
         "nom": "Chick lit humoristique",
@@ -80,9 +75,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 12,
         "caracteres_par_chapitre": 6250,
-        "schema_principal": "Schéma classique",
-        "schema_complementaire": "Structure en 3 actes",
-        "exemple_œuvre": "Le Journal de Bridget Jones"
+        "schema_principal": "SchemaNarratifClassique",
+        "schema_complementaire": "SchemaNarratifStructure3Actes",
     },
     {
         "nom": "Dystopie sociale post-apocalyptique",
@@ -94,9 +88,8 @@ structure_romans = [
         "cadre": {"lieu": "Société post-apocalyptique", "temps": "Après une catastrophe"},
         "nombre_chapitres": 16,
         "caracteres_par_chapitre": 4688,
-        "schema_principal": "Schéma circulaire",
-        "schema_complementaire": "Pyramide de Freytag",
-        "exemple_œuvre": "Hunger Games"
+        "schema_principal": "SchemaNarratifCirculaire",
+        "schema_complementaire": "SchemaNarratifFreytag",
     },
     {
         "nom": "Fantastique gothique en huis clos",
@@ -108,9 +101,8 @@ structure_romans = [
         "cadre": {"lieu": "Lieu clos (huis clos)", "temps": "Passé"},
         "nombre_chapitres": 8,
         "caracteres_par_chapitre": 9375,
-        "schema_principal": "Schéma cadre",
-        "schema_complementaire": "Schéma classique horrifique",
-        "exemple_œuvre": "Le Tour d'écrou"
+        "schema_principal": "SchemaNarratifCadre",
+        "schema_complementaire": "SchemaNarratifHorreur",
     },
     {
         "nom": "Cyberpunk dramatique",
@@ -122,9 +114,8 @@ structure_romans = [
         "cadre": {"lieu": "Futur urbain", "temps": "Futur"},
         "nombre_chapitres": 20,
         "caracteres_par_chapitre": 3750,
-        "schema_principal": "Schéma fragmenté",
-        "schema_complementaire": "Schéma quinaire",
-        "exemple_œuvre": "Neuromancien"
+        "schema_principal": "SchemaNarratifFragmenté",
+        "schema_complementaire": "SchemaQuinaire",
     },
     {
         "nom": "Roman initiatique pour enfants",
@@ -136,9 +127,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 10,
         "caracteres_par_chapitre": 7500,
-        "schema_principal": "Voyage du héros simplifié",
-        "schema_complementaire": "Schéma classique",
-        "exemple_œuvre": "Le Petit Prince"
+        "schema_principal": "VoyageDuHeros",
+        "schema_complementaire": "SchemaNarratifClassique",
     },
     {
         "nom": "Steampunk à suspense",
@@ -150,9 +140,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville industrielle", "temps": "Passé"},
         "nombre_chapitres": 13,
         "caracteres_par_chapitre": 5769,
-        "schema_principal": "In medias res",
-        "schema_complementaire": "Schéma actanciel",
-        "exemple_œuvre": "L'Affaire Jack l'Éventreur"
+        "schema_principal": "SchemaNarratifInMediasRes",
+        "schema_complementaire": "SchemaActanciel",
     },
     {
         "nom": "Roman philosophique spatial",
@@ -164,9 +153,8 @@ structure_romans = [
         "cadre": {"lieu": "Espace intergalactique", "temps": "Futur lointain"},
         "nombre_chapitres": 18,
         "caracteres_par_chapitre": 4167,
-        "schema_principal": "Schéma fragmenté",
-        "schema_complementaire": "Schéma circulaire",
-        "exemple_œuvre": "Solaris"
+        "schema_principal": "SchemaNarratifFragmenté",
+        "schema_complementaire": "SchemaNarratifCirculaire",
     },
     {
         "nom": "Roman noir social",
@@ -178,9 +166,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 15,
         "caracteres_par_chapitre": 5000,
-        "schema_principal": "Flashback",
-        "schema_complementaire": "Schéma dramatique",
-        "exemple_œuvre": "L.A. Confidential"
+        "schema_principal": "SchemaNarratifFlashback",
+        "schema_complementaire": "SchemaDramatique",
     },
     {
         "nom": "Épopée fantasy initiatique",
@@ -192,9 +179,8 @@ structure_romans = [
         "cadre": {"lieu": "Univers inventé", "temps": "Intemporel"},
         "nombre_chapitres": 12,
         "caracteres_par_chapitre": 6250,
-        "schema_principal": "Voyage du héros",
-        "schema_complementaire": "Schéma actanciel",
-        "exemple_œuvre": "L'Assassin royal"
+        "schema_principal": "VoyageDuHeros",
+        "schema_complementaire": "SchemaActanciel",
     },
     {
         "nom": "Autofiction existentielle",
@@ -206,9 +192,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 17,
         "caracteres_par_chapitre": 4412,
-        "schema_principal": "Schéma fragmenté",
-        "schema_complementaire": "Schéma circulaire",
-        "exemple_œuvre": "Les Mots"
+        "schema_principal": "SchemaNarratifFragmenté",
+        "schema_complementaire": "SchemaNarratifCirculaire",
     },
     {
         "nom": "Érotique romantique pour New Adult",
@@ -220,9 +205,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 14,
         "caracteres_par_chapitre": 5357,
-        "schema_principal": "Flashback",
-        "schema_complementaire": "Schéma actanciel",
-        "exemple_œuvre": "Cinquante nuances de Grey"
+        "schema_principal": "SchemaNarratifFlashback",
+        "schema_complementaire": "SchemaActanciel",
     },
     {
         "nom": "Conte absurde et initiatique",
@@ -234,9 +218,8 @@ structure_romans = [
         "cadre": {"lieu": "Univers inventé", "temps": "Intemporel"},
         "nombre_chapitres": 9,
         "caracteres_par_chapitre": 8333,
-        "schema_principal": "Schéma circulaire",
-        "schema_complementaire": "Structure absurde",
-        "exemple_œuvre": "Alice au pays des merveilles"
+        "schema_principal": "SchemaNarratifCirculaire",
+        "schema_complementaire": "SchemaNarratifStructureAbsurde",
     },
     {
         "nom": "Solarpunk utopique",
@@ -248,9 +231,8 @@ structure_romans = [
         "cadre": {"lieu": "Futur urbain", "temps": "Futur"},
         "nombre_chapitres": 11,
         "caracteres_par_chapitre": 6818,
-        "schema_principal": "Schéma classique",
-        "schema_complementaire": "Voyage du héros optimiste",
-        "exemple_œuvre": "The Dispossessed"
+        "schema_principal": "SchemaNarratifClassique",
+        "schema_complementaire": "VoyageDuHeros",
     },
     {
         "nom": "Polar épistolaire rural",
@@ -262,9 +244,8 @@ structure_romans = [
         "cadre": {"lieu": "Campagne historique", "temps": "Passé"},
         "nombre_chapitres": 12,
         "caracteres_par_chapitre": 6250,
-        "schema_principal": "Schéma cadre épistolaire",
-        "schema_complementaire": "Schéma classique policier",
-        "exemple_œuvre": "Le Crime de l'Orient-Express"
+        "schema_principal": "SchemaNarratifEpistolaire",
+        "schema_complementaire": "SchemaNarratifRomanPolicier",
     },
     {
         "nom": "Drame familial choral",
@@ -276,9 +257,8 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 16,
         "caracteres_par_chapitre": 4688,
-        "schema_principal": "Flashback",
-        "schema_complementaire": "Schéma fragmenté",
-        "exemple_œuvre": "Petits meurtres entre amis"
+        "schema_principal": "SchemaNarratifFlashback",
+        "schema_complementaire": "SchemaNarratifFragmenté",
     }
 ]
 
