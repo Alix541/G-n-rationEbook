@@ -17,6 +17,8 @@ class Perssonage(BaseModel):
     Amis : Optional[str] = Field(description="Les compagnons de routes du personnages, les personnes qu'ils aiment bien, ça famille, amis etc...")
     Ennemie : Optional[str] = Field(description="Les personnes que le héro n'aime pas, qui se mette sur ça route, qui sont contre lui")
     DescriptionPhysique : str = Field(description="Une courte description physique du personnages, en comprenant les habits et la morphologie")
+    HistoireDuPersonnage : str = Field(description="Décrire ici le passé du personnage, qui pourrait expliquer certaine caractèrique chez lui")
+    QuotidienDuPersonnage : str = Field(description="Décrire ici le quotidien du personnage, ce qu'il fait au moment au débute l'histoire")
 
 class ListePersonnages(BaseModel):
     """Une liste de personnage pour l'histoire"""
