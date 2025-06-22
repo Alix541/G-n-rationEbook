@@ -22,3 +22,8 @@ for numero, contenu in GeneTexteEbook.ChapitresPourMarkdown.items():
         f.write(f"# {contenu['titre']}\n\n")
         f.write(contenu['description'])
     print(f"✅ Fichier {chemin_fichier} généré")
+
+# Génération de l'image en markdown
+
+with open("Ebook_Markdown/cover.png", "wb") as f:
+    f.write(GeneTexteEbook.image_bytes)

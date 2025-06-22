@@ -1,0 +1,42 @@
+Type_Cover_Def = {
+    "Scene-setter": "Illustration immersive d'une scène ou d'un décor tiré de l'univers du livre, souvent utilisée pour les genres fantasy ou science-fiction.",
+    "Portrait-centered": "Gros plan sur un ou plusieurs personnages principaux pour ancrer l'histoire dans l'humain.",
+    "Low-lighting / Silhouettes": "Jeux d'ombres ou silhouettes pour créer du mystère, adapté aux thrillers ou récits sombres.",
+    "Double exposure": "Superposition artistique de portraits et d'autres éléments visuels pour symboliser des thèmes complexes.",
+    "Object-based": "Un objet central symbolique (clé, bijou, etc.) occupe la couverture, représentant le cœur de l'intrigue.",
+    "Symbol-based": "Un symbole graphique ou abstrait évoque le ton ou l’univers du livre, courant en fantasy ou thriller.",
+    "Setting-focus": "Le décor (ville, nature, architecture) est mis en avant, pour ancrer l’histoire dans un lieu fort.",
+    "Conceptual": "Approche abstraite ou métaphorique centrée sur une idée ou un thème plutôt qu'une représentation littérale.",
+    "Typographic-image": "Typographie intégrée à des éléments visuels, où le texte participe à la construction de l'image.",
+    "Hybrid": "Combinaison de plusieurs styles (ex. : portrait + symbole), nécessitant un bon équilibre graphique.",
+    "Typographic": "Le design repose entièrement sur la typographie, sans image figurative, souvent pour les essais ou récits contemporains.",
+    "Minimalist": "Design épuré avec peu d’éléments visuels, privilégiant l’impact visuel immédiat par la simplicité.",
+    "Retro": "Design évoquant une époque passée à travers typographies, couleurs et styles vintage.",
+    "Illustrated": "Couverture dessinée ou peinte à la main, donnant un ton artistique ou narratif particulier.",
+    "Pattern-based": "Motifs répétitifs ou formes abstraites créant une texture visuelle forte et reconnaissable.",
+    "Photographic": "Utilisation d’une photographie comme élément central, souvent pour les récits réalistes ou biographies.",
+    "Cityscapes": "Paysage urbain en vedette, idéal pour les romans contemporains, dystopies ou récits citadins."
+}
+
+Style_Dessin_Def = {
+    "Realism": "Représentation fidèle et détaillée de la réalité, avec une grande attention aux proportions et à la lumière.",
+    "Photorealism": "Style ultra-réaliste visant à reproduire une image photographique avec précision.",
+    "Impressionism": "Style basé sur des touches visibles et une représentation lumineuse et colorée, souvent avec des contours flous.",
+    "Expressionism": "Style qui cherche à exprimer des émotions intenses par des formes déformées et des couleurs vives.",
+    "Cubism": "Style abstrait où les sujets sont décomposés en formes géométriques et représentés sous plusieurs angles simultanément.",
+    "Surrealism": "Style mêlant réalité et éléments fantastiques ou oniriques, créant des images étranges et surréalistes.",
+    "Abstract": "Représentation non figurative, jouant avec les formes, les couleurs et les lignes sans chercher à représenter le réel.",
+    "Line Art": "Dessin réalisé uniquement avec des lignes, souvent en noir et blanc, sans dégradés ni ombres.",
+    "Cartoon": "Style simplifié et caricatural, aux formes exagérées et expressions très expressives, souvent humoristique.",
+    "Manga / Anime": "Style japonais caractérisé par des personnages aux grands yeux, traits épurés, et des expressions codifiées.",
+    "Minimalism": "Dessin avec un minimum de traits et d’éléments pour exprimer l’essentiel.",
+    "Sketch": "Dessin rapide, souvent non fini, réalisé avec peu de détails, privilégiant le mouvement et l’expression.",
+    "Graffiti": "Style urbain, coloré et dynamique, souvent réalisé à la bombe aérosol avec des lettres stylisées ou personnages.",
+    "Pointillism": "Technique utilisant des points de couleur juxtaposés pour créer une image entière à distance.",
+    "Ink Wash": "Dessin à l’encre avec des dégradés obtenus par dilution, donnant un effet aquarelle monochrome.",
+    "Charcoal": "Dessin au fusain, aux traits noirs intenses et aux ombres douces.",
+    "Digital Art": "Dessin réalisé avec des outils numériques, permettant une grande variété de styles et d’effets.",
+    "Calligraphy": "Dessin stylisé avec des traits fluides et décoratifs, souvent utilisé pour les lettres ou symboles.",
+    "Stencil Art": "Dessin utilisant des pochoirs pour créer des formes précises et répétitives.",
+    "Collage": "Assemblage d’éléments graphiques ou dessins découpés pour créer une nouvelle composition."
+}

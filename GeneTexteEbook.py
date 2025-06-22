@@ -9,6 +9,12 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain.agents import Tool, initialize_agent
 from langchain.schema import AgentAction, AgentFinish
 from langchain.agents.agent_types import AgentType
+from langchain.chains import LLMChain
+from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
+from langchain_core.prompts import PromptTemplate
+
+from openai import OpenAI
+import base64
 
 import categorie
 import ClassPers
@@ -23,8 +29,8 @@ if "LANDSMITH_PROJECT" not in os.environ:
 if "OPENAI_API_KEY" not in os.environ:
     os.environ["OPENAI_API_KEY"]="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"
 
-model = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 
+model = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 struct_roman=categorie.tirer_scenario()
 
 # Génération du shema narratif principal
@@ -145,4 +151,36 @@ message = [
 Titre = model.invoke(message).content
 print(Titre, "\n\nTitre du roman généré avec succès !")
 
-# Génération du roman complet
+# Génération de la couverture du roman
+
+openAI = OpenAI()
+
+message = [
+    SystemMessage(content="Tu es un assistant designer spécialisé en création de couvertures de livres."),
+    SystemMessage(content="Ta mission est de générer un prompt pour créer une couverture de roman."),
+    SystemMessage(content="Le prompt doit être détaillé, faire au maximum 1000 caractères, et résumer l'univers, les personnages, les chapitres, le schéma narratif principal et complémentaire du roman ci-dessous."),
+    SystemMessage(content=f"Il est très important que le titre exact '{Titre}' apparaisse sur la couverture de façon lisible."),
+    HumanMessage(content=(
+        f"Voici les éléments du roman à prendre en compte pour la couverture :\n"
+        f"- Monde : {Monde}\n"
+        f"- Personnages : {PersonnageDict}\n"
+        f"- Public visé : {struct_roman['public']}\n"
+        f"- Schéma narratif principal : {Shema_narratif_principal}\n"
+        f"- Schéma narratif complémentaire : {Shema_complémentaire_narratif}\n"
+        f"Génère un prompt d'image de couverture en haute résolution, avec un style artistique adapté à l'ambiance du roman, en intégrant le titre '{Titre}' de façon lisible."
+    ))
+]
+
+promptt = model.invoke(message).content
+print(promptt, "\n\nPrompt pour la couverture généré avec succès !\n\n")
+
+MonImage = openAI.images.generate(
+    prompt=promptt,
+    n=1,
+    size="1024x1536"
+)
+
+image_base64 = MonImage.data[0].b64_json #correspond à ça : result["data"][0]["b64_json"]
+image_bytes = base64.b64decode(image_base64)
+
+print(Titre, "\n\nCouverture du roman générée avec succès !\n\n")
