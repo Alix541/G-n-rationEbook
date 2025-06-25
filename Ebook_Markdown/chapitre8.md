@@ -1,3 +1,3 @@
-# Les Éclats de Rire et les Larmes de Joie
+# L'Affrontement Final
 
-Lou fait l'expérience de l'impact des émotions sur la magie du monde flottant. Il découvre comment les éclats de rire peuvent faire léviter des objets tandis que les larmes de joie peuvent faire fleurir des jardins. Ces leçons lui enseignent à apprécier la diversité des émotions.
+Kael se retrouve face à face avec Kharak dans un combat épique. Ce duel ne se limite pas à la force physique, mais teste également la résolution de Kael et sa compréhension de son pouvoir. Le destin de Terra Nova est en jeu.

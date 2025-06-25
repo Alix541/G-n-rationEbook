@@ -1,0 +1,19 @@
+{
+  "nom": "Science-fantasy épique",
+  "genres": [
+    "Roman de fantasy",
+    "Roman de science-fiction"
+  ],
+  "ton": "Épique",
+  "public": "Jeune adulte (YA)",
+  "format": "Roman classique",
+  "structure": "Linéaire",
+  "cadre": {
+    "lieu": "Univers inventé",
+    "temps": "Intemporel"
+  },
+  "nombre_chapitres": 10,
+  "caracteres_par_chapitre": 7500,
+  "schema_principal": "VoyageDuHeros",
+  "schema_complementaire": "SchemaActanciel"
+}

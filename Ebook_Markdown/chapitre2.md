@@ -1,3 +1,3 @@
-# La Journée de la Gravité Inversée
+# Le Poids du Passé
 
-Lou arrive dans le monde flottant le jour de la célébration de la Gravité Inversée. Les habitants, mi-humains mi-objets, marchent sur les plafonds des maisons en bonbons, jonglant avec des fruits volants. Lou se perd dans ce chaos joyeux, découvrant l'absurde dans chaque situation.
+Kael hésite à répondre à l'appel, craignant de laisser derrière lui sa famille et son atelier. Les doutes l'assaillent, mais une rencontre inattendue avec Elyndra, une sage elfe, lui donne le courage d'envisager son destin.

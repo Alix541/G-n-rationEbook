@@ -1,3 +1,3 @@
-# Le Livre des Absurdités
+# L'Appel des Ancêtres
 
-Lou, un adolescent rêveur, découvre un livre ancien dans une bibliothèque poussiéreuse. Ce livre raconte l'histoire d'un monde où les objets inanimés ont des personnalités. Intrigué, Lou décide de plonger dans cet univers absurde, espérant y trouver des réponses sur lui-même.
+Dans un petit village de Terra Nova, Kael, un jeune inventeur, découvre un ancien artefact qui pourrait changer le destin de son monde. Un soir, il reçoit un message mystérieux de son ancêtre, l'invitant à partir à l'aventure et à découvrir la vérité sur cet artefact.

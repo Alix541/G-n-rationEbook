@@ -1,3 +1,3 @@
-# Rencontre avec le Roi Chat
+# La Forêt Enchantée
 
-Lou fait la connaissance de Roi Chat, un chat majestueux qui se prend très au sérieux. Bien que comique, Roi Chat a du mal à gérer son royaume d'objets. Lou devient rapidement son protégé, tandis qu'une rivalité s'installe avec l'Horloge, qui conteste son autorité.
+Avec le soutien d'Elyndra, Kael franchit le seuil de son village et s'aventure dans une forêt enchantée. Là, il doit faire face à des créatures mystiques et surmonter ses peurs, découvrant les merveilles et les dangers de ce nouveau monde.

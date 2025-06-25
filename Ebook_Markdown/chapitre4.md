@@ -1,3 +1,3 @@
-# Le Chronomancien et le Temps Perdu
+# Alliances Improbables
 
-Lou aide l'Horloge Retard à rattraper le temps, mais se retrouve dans des situations de plus en plus absurdes. En jonglant avec des pastèques chantantes et en évitant des nuages farceurs, il apprend à laisser de côté ses doutes et à embrasser l'imprévisibilité.
+Au cours de son périple, Kael rencontre Valen, un guerrier rebelle, et Lira, une sorcière au grand cœur. Ensemble, ils forment une alliance pour combattre les mercenaires de Kharak, le seigneur de guerre qui convoite l'artefact.

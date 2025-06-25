@@ -1,5 +1,9 @@
 from datetime import date
+import os
+import base64
+
 import GeneTexteEbook
+import GeneCoverEbook
 
 # Génération du fichier meta.yaml
 
@@ -23,7 +27,11 @@ for numero, contenu in GeneTexteEbook.ChapitresPourMarkdown.items():
         f.write(contenu['description'])
     print(f"✅ Fichier {chemin_fichier} généré")
 
-# Génération de l'image en markdown
+# Affichage de la cover en png
 
-with open("Ebook_Markdown/cover.png", "wb") as f:
-    f.write(GeneTexteEbook.image_bytes)
+cover_path = os.path.join("Ebook_Markdown", "cover.png")
+cover_path = os.path.abspath(cover_path)
+
+if  GeneCoverEbook.image_base64:
+    with open("Ebook_Markdown/cover.png", "wb") as f:
+        f.write(base64.b64decode(GeneCoverEbook.image_base64))

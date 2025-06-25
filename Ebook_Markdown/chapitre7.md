@@ -1,3 +1,3 @@
-# Le Concours de Blagues
+# Le Temple des Échos
 
-Lou, Flora et d'autres habitants organisent un grand concours de blagues. Chacun essaie d'impressionner les autres avec des histoires loufoques. Lou découvre l'importance du rire et de la camaraderie, tout en s'affirmant dans ce monde décalé.
+La quête atteint son paroxysme lorsque Kael et ses alliés infiltrent un ancien temple où les secrets de l'artefact sont cachés. Face à des énigmes et des gardiens mystiques, ils découvrent la vérité sur l'équilibre entre magie et technologie.

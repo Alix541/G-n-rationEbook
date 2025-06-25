@@ -1,3 +1,3 @@
-# Les Histoires sans Fin
+# Le Visage de l'Ennemi
 
-Lou se retrouve dans une forêt de nuages où les arbres racontent des histoires infinies. Chaque fois qu'il essaie de sortir, il retombe au même endroit, confronté à des dilemmes absurdes. Cette expérience le pousse à réfléchir sur la nature de la réalité et de la narration.
+La menace de Kharak se précise alors qu'il déploie ses forces pour s'emparer de l'artefact. Kael et ses amis doivent se préparer à une confrontation inévitable, tout en apprenant à travailler ensemble malgré leurs différences.

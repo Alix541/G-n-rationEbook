@@ -7,7 +7,6 @@ Type_Cover_Def = {
     "Symbol-based": "Un symbole graphique ou abstrait évoque le ton ou l’univers du livre, courant en fantasy ou thriller.",
     "Setting-focus": "Le décor (ville, nature, architecture) est mis en avant, pour ancrer l’histoire dans un lieu fort.",
     "Conceptual": "Approche abstraite ou métaphorique centrée sur une idée ou un thème plutôt qu'une représentation littérale.",
-    "Typographic-image": "Typographie intégrée à des éléments visuels, où le texte participe à la construction de l'image.",
     "Hybrid": "Combinaison de plusieurs styles (ex. : portrait + symbole), nécessitant un bon équilibre graphique.",
     "Typographic": "Le design repose entièrement sur la typographie, sans image figurative, souvent pour les essais ou récits contemporains.",
     "Minimalist": "Design épuré avec peu d’éléments visuels, privilégiant l’impact visuel immédiat par la simplicité.",
