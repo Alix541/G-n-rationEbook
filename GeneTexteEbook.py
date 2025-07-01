@@ -13,8 +13,10 @@ from langchain.agents.agent_types import AgentType
 from langchain.chains import LLMChain
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from langchain_core.prompts import PromptTemplate
+from langgraph.graph import StateGraph, START, END
 
-from langgraph.prebuilt import create_openai_functions_agent
+from IPython.display import Image, display
+
 from typing import TypedDict
 
 from openai import OpenAI
@@ -315,13 +317,15 @@ tools = [
 
 llm_with_tools = model.bind_tools(tools)
 
+print(f"nb chap : {struct_roman['nombre_chapitres']}")
+
 def WriteTexteChapitre(chapitre: ChapterState) -> str:
     """Écrit le texte du chapitre en cours."""
     if chapitre["Index"] == 0:
         msg = llm_with_tools.invoke(messageInitialisation)
     else:
-        messageBoucle[3] = SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['description']}"),
-        messageBoucle[4] = SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['titre']}"),
+        messageBoucle[3] = SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['description']}")
+        messageBoucle[4] = SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['titre']}")
         messageBoucle[5] = SystemMessage(content=f"Résumer de l'emsemble des chapitres précédent écrit : {chapitre['Recap']}")
         msg = llm_with_tools.invoke(messageBoucle)
     chapter_text = msg.content
@@ -329,7 +333,8 @@ def WriteTexteChapitre(chapitre: ChapterState) -> str:
     return {"Texte": chapitre["Texte"]}
 
 def WriteRecapChapitre(chapitre: ChapterState) -> str:
-    """Écrit le recapitulatif du chapitre en cours."""
+    """Écrit le recapitulatif du chapitre en cours avec mémoire dédiée."""
+    # Crée une mémoire spécifique à ce nœud
     messageRecap = [
         SystemMessage(content="Tu es un assistant narratif spécialisé en fiction."),
         SystemMessage(content="Ta mission est de générer un récapitulatif du chapitre écrit de 5 lignes grand maximum."),
@@ -342,62 +347,39 @@ def WriteRecapChapitre(chapitre: ChapterState) -> str:
 def UpIndex(chapitre: ChapterState) -> str:
     """Met à jour l'index du chapitre en cours."""
     chapitre["Index"] += 1
+    print(f"Index : {chapitre['Index']}")
     return {"Index": chapitre["Index"]}
 
-"""
-# Ajout de la mémoire pour l'agent
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+graph_builder = StateGraph(ChapterState)
 
-agent = initialize_agent(
-    tools=tools,
-    llm=model,
-    agent=AgentType.OPENAI_FUNCTIONS,
-    verbose=True,
-    memory=memory
+graph_builder.add_node("WriteTexteChapitre", WriteTexteChapitre)
+graph_builder.add_node("WriteRecapChapitre", WriteRecapChapitre)
+graph_builder.add_node("UpIndex", UpIndex)
+
+def boucle_decision(chapitre: ChapterState) -> str:
+    """Condition pour continuer ou arrêter l'écriture des chapitres."""
+    print(f"J'appelle boucle décision")
+    if chapitre["Index"] >= 5:
+        return "END"
+    else:
+        return "WriteTexteChapitre"
+
+graph_builder.add_edge(START, "WriteTexteChapitre")
+graph_builder.add_edge("WriteTexteChapitre", "WriteRecapChapitre")
+graph_builder.add_edge("WriteRecapChapitre", "UpIndex")
+graph_builder.add_conditional_edges(
+    "UpIndex",
+    boucle_decision,
+    {"WriteTexteChapitre": "WriteTexteChapitre", "END": END}
 )
+graph_workflow = graph_builder.compile()
 
-# Sauvegarde des chapitres complets et des résumés
-chapitres_texte_path = "Sauvegarde/chapitres_texte.json"
-if os.path.exists(chapitres_texte_path):
-    with open("Sauvegarde/chapitres_resume.json", "r", encoding="utf-8") as f:
-        ChapitrePrecedent = json.load(f)
-    print("📖 Chapitres entiers et résumés chargés depuis la sauvegarde !")
-else:
-    ChapitrePrecedent = []
+display(Image(graph_workflow.get_graph().draw_mermaid_png()))
 
-    # Génération du premier chapitre avec messageInitialisationé
-    response = agent.invoke(messageInitialisation)
-    chapitre_text = response.content.split("---RESUME---")[0].strip()
-    resume_text = response.content.split("---RESUME---")[1].strip() if "---RESUME---" in response.content else ""
+chapter_state = graph_workflow.invoke({"Index": 0, "Texte": [], "Recap": []})
 
-    ChapitrePrecedent.append({
-        "titre": ChapitresPourMarkdown[1]['titre'],
-        "description": ChapitresPourMarkdown[1]['description'],
-        "texte": chapitre_text,
-        "resume": resume_text
-    })
-    print(f"Chapitre 1 écrit avec succès !")
-
-    for i in range(1, struct_roman['nombre_chapitres']):
-        nbchap = i
-        messageBoucle[5] = SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown[str(nbchap+1)]['description']}")
-        messageBoucle[6] = SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown[str(nbchap+1)]['titre']}")
-        messageBoucle[7] = SystemMessage(content=f"Résumer de l'emsemble des chapitres précédent écrit : {ChapitrePrecedent[nbchap-1]['resume']}")
-
-        response = agent.invoke(messageBoucle)
-        chapitre_text = response.content.split("---RESUME---")[0].strip()
-        resume_text = response.content.split("---RESUME---")[1].strip() if "---RESUME---" in response.content else ""
-
-        ChapitrePrecedent.append({
-            "titre": ChapitresPourMarkdown[str(nbchap+1)]['titre'],
-            "description": ChapitresPourMarkdown[str(nbchap+1)]['description'],
-            "texte": chapitre_text,
-            "resume": resume_text
-        })
-        print(f"Chapitre {nbchap+1} écrit avec succès !")
-
-    # Sauvegarde des chapitres complets et des résumés
-    with open("Sauvegarde/chapitres_resume.json", "w", encoding="utf-8") as f:
-        json.dump(ChapitrePrecedent, f, ensure_ascii=False, indent=2)
-    print("📖 Chapitres entiers et résumés sauvegardés !")
-"""
+full_chapter_path = "Sauvegarde/chapitres_full_texte.json"
+with open(full_chapter_path, "w", encoding="utf-8") as f:
+    json.dump(chapter_state['Texte'], f, ensure_ascii=False, indent=2)
+print(f"📖 Chapitres complets écrits et sauvegardés dans {full_chapter_path} !")
+print(f"{chapter_state['Texte']}")
