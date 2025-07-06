@@ -1,19 +1,19 @@
 {
-  "nom": "Science-fantasy épique",
+  "nom": "Dystopie sociale post-apocalyptique",
   "genres": [
-    "Roman de fantasy",
-    "Roman de science-fiction"
+    "Roman dystopique",
+    "Roman social"
   ],
-  "ton": "Épique",
+  "ton": "Tragique",
   "public": "Jeune adulte (YA)",
-  "format": "Roman classique",
-  "structure": "Linéaire",
+  "format": "Roman graphique",
+  "structure": "Circulaire",
   "cadre": {
-    "lieu": "Univers inventé",
-    "temps": "Intemporel"
+    "lieu": "Société post-apocalyptique",
+    "temps": "Après une catastrophe"
   },
-  "nombre_chapitres": 10,
-  "caracteres_par_chapitre": 7500,
-  "schema_principal": "VoyageDuHeros",
-  "schema_complementaire": "SchemaActanciel"
+  "nombre_chapitres": 16,
+  "caracteres_par_chapitre": 4688,
+  "schema_principal": "SchemaNarratifCirculaire",
+  "schema_complementaire": "SchemaNarratifFreytag"
 }

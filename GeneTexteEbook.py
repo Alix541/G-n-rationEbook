@@ -4,6 +4,8 @@ import inspect
 from typing import Optional, List
 from pydantic import BaseModel, Field
 import json
+from typing import Annotated
+from typing import Literal
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -14,6 +16,8 @@ from langchain.chains import LLMChain
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from langchain_core.prompts import PromptTemplate
 from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langgraph.prebuilt import ToolNode, tools_condition
 
 from IPython.display import Image, display
 
@@ -37,7 +41,7 @@ if "OPENAI_API_KEY" not in os.environ:
     os.environ["OPENAI_API_KEY"]="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"
 
 
-model = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
+model = ChatOpenAI(model="gpt-4o", temperature=0.7)
 struct_roman=categorie.tirer_scenario()
 
 # struct_roman
@@ -213,173 +217,225 @@ else:
 
 # Génération du roman en entier
 
+full_chapitre_path = "Sauvegarde/full_chapitre.json"
 
-messageInitialisation = [
-    SystemMessage(content="Tu es un assistant narratif spécialisé en fiction."),
-    SystemMessage(content=f"Ta mission est d'écrire un chapitre entier du roman, en respectant la taille indiquée qui est de environ {struct_roman['caracteres_par_chapitre']} caractères."),
-    SystemMessage(content="Tu peux t'aider des outils à ta disposition pour accéder à tout élément utile (structure du roman, monde, personnages, schémas narratifs, description du chapitre, shema_complementaire_narratif, etc). N'hésite pas à les utiliser pour garantir la cohérence et la richesse du récit."),
-    SystemMessage(content=f"Voici la structure du roman : {struct_roman}"),
-    SystemMessage(content=f"Monde où prend place l'histoire : {Monde}"),
-    SystemMessage(content=f"Schéma narratif principal (à garder en mémoire) : {Shema_narratif_principal}"),
-    SystemMessage(content=f"Schéma narratif complémentaire (à garder en mémoire) : {Shema_complementaire_narratif}"),
-    SystemMessage(content=f"Liste des personnages (à garder en mémoire): {PersonnageDict}"),
-    SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown['1']['description']}"),
-    SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown['1']['titre']}"),
-    SystemMessage(content="N'oublie pas de respecter la cohérence avec les chapitres précédents et d'assurer la continuité de l'intrigue."),
-    HumanMessage(content="Écris le chapitre complet.")
-]
-
-messageBoucle = [
-    SystemMessage(content="Tu es un assistant narratif spécialisé en fiction."),
-    SystemMessage(content=f"Ta mission est d'écrire un chapitre entier du roman, en respectant la taille indiquée qui est de environ {struct_roman['caracteres_par_chapitre']} caractères."),
-    SystemMessage(content="Tu peux t'aider des outils à ta disposition pour accéder à tout élément utile (structure du roman, monde, personnages, schémas narratifs, description du chapitre, shema_complementaire_narratif, etc). N'hésite pas à les utiliser pour garantir la cohérence et la richesse du récit."),
-    SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire :"),
-    SystemMessage(content=f"Titre du chapitre a écrire :") ,
-    SystemMessage(content=f"Résumer de l'emsemble des chapitres précédent écrit : "),
-    SystemMessage(content="N'oublie pas de respecter la cohérence avec les chapitres précédents et d'assurer la continuité de l'intrigue."),
-    HumanMessage(content="Écris le chapitre complet.")
-]
-
-class ChapterState(TypedDict, total=False):
-    """État du chapitre en cours d'écriture."""
-    Index: int  # Index du chapitre (par défaut 1)
-    Texte: List[str]
-    Recap: List[str]
-
-
-# Création des outils pour l'agent
-
-def get_struct_roman(input_str=None) -> str:
-    """Retourne la structure du roman sous forme de texte JSON formaté."""
-    return json.dumps(struct_roman, ensure_ascii=False, indent=2)
-
-def get_monde(input_str=None) -> str:
-    """Retourne la description du monde sous forme de texte JSON formaté."""
-    return json.dumps(Monde, ensure_ascii=False, indent=2)
-
-def get_shema_narratif_principal(input_str=None) -> str:
-    """Retourne le schéma narratif principal sous forme de texte JSON formaté."""
-    return json.dumps(Shema_narratif_principal, ensure_ascii=False, indent=2)
-
-def get_shema_complementaire_narratif(input_str=None) -> str:
-    """Retourne le schéma narratif complémentaire sous forme de texte JSON formaté."""
-    return json.dumps(Shema_complementaire_narratif, ensure_ascii=False, indent=2)
-
-def get_personnages(input_str=None) -> str:
-    """Retourne la liste des personnages sous forme de texte JSON formaté."""
-    return json.dumps(PersonnageDict, ensure_ascii=False, indent=2)
-
-def get_description_chapitre(nbchap: int = 0) -> str:
-    """Retourne la description du chapitre courant."""
-    return ChapitresPourMarkdown[nbchap + 1]['description']
-
-def get_Liste_Chap_Deja_Ecrit_Resume(chapitre: ChapterState) -> str:
-    """Retourne la description de tous les chapitres précédents écrits."""
-    return "\n\n".join([chap["resume"] for chap in chapitre['Recap']])
-
-tools = [
-    Tool(
-        name="AfficherStructureRoman",
-        func=lambda _: get_struct_roman(),
-        description="Affiche la structure du roman (struct_roman) au format JSON."
-    ),
-    Tool(
-        name="AfficherMonde",
-        func=lambda _: get_monde(),
-        description="Affiche la description du monde fictif (Monde) au format JSON."
-    ),
-    Tool(
-        name="AfficherSchemaNarratifPrincipal",
-        func=lambda _: get_shema_narratif_principal(),
-        description="Affiche le schéma narratif principal (Shema_narratif_principal) au format JSON."
-    ),
-    Tool(
-        name="AfficherSchemaNarratifComplementaire",
-        func=lambda _: get_shema_complementaire_narratif(),
-        description="Affiche le schéma narratif complémentaire (Shema_complementaire_narratif) au format JSON."
-    ),
-    Tool(
-        name="AfficherPersonnages",
-        func=lambda _: get_personnages(),
-        description="Affiche la liste des personnages (PersonnageDict) au format JSON."
-    ),
-    Tool(
-        name="AfficherDescriptionChapitre",
-        func=lambda x: get_description_chapitre(int(x)),
-        description="Affiche la description du chapitre dont le numéro est passé en argument (commence à 0)."
-    ),
-    Tool(
-        name="AfficherDescriptionChapitreDejaEcrit",
-        func=lambda _: get_Liste_Chap_Deja_Ecrit_Resume(),
-        description="Affiche la liste des résumés de tous les chapitres déjà écrits, pour aider à la continuité de l'histoire."
-    ),
-]
-
-llm_with_tools = model.bind_tools(tools)
-
-print(f"nb chap : {struct_roman['nombre_chapitres']}")
-
-def WriteTexteChapitre(chapitre: ChapterState) -> str:
-    """Écrit le texte du chapitre en cours."""
-    if chapitre["Index"] == 0:
-        msg = llm_with_tools.invoke(messageInitialisation)
-    else:
-        messageBoucle[3] = SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['description']}")
-        messageBoucle[4] = SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['titre']}")
-        messageBoucle[5] = SystemMessage(content=f"Résumer de l'emsemble des chapitres précédent écrit : {chapitre['Recap']}")
-        msg = llm_with_tools.invoke(messageBoucle)
-    chapter_text = msg.content
-    chapitre["Texte"].append(chapter_text)
-    return {"Texte": chapitre["Texte"]}
-
-def WriteRecapChapitre(chapitre: ChapterState) -> str:
-    """Écrit le recapitulatif du chapitre en cours avec mémoire dédiée."""
-    # Crée une mémoire spécifique à ce nœud
-    messageRecap = [
+if os.path.exists(full_chapitre_path):
+    with open(full_chapitre_path, "r", encoding="utf-8") as f:
+        full_chapitre = f.read().strip()
+    print("📖 Roman complet chargé depuis la sauvegarde !")
+else:
+    messageInitialisation = [
         SystemMessage(content="Tu es un assistant narratif spécialisé en fiction."),
-        SystemMessage(content="Ta mission est de générer un récapitulatif du chapitre écrit de 5 lignes grand maximum."),
-        HumanMessage(content=f"Voici le chapitre a résumer : {chapitre['Texte'][chapitre['Index']]}"),
+        SystemMessage(content=f"Ta mission est d'écrire un chapitre entier du roman, en respectant la taille indiquée qui est de environ {struct_roman['caracteres_par_chapitre']} caractères."),
+        SystemMessage(content="Tu peux t'aider des outils à ta disposition pour accéder à tout élément utile (structure du roman, monde, personnages, schémas narratifs, description du chapitre, shema_complementaire_narratif, etc). N'hésite pas à les utiliser pour garantir la cohérence et la richesse du récit."),
+        SystemMessage(content="Tu en est actuellement au chapitre 1, tu dois donc écrire le premier chapitre du roman."),
+        SystemMessage(content=f"Voici la structure du roman : {struct_roman}"),
+        SystemMessage(content=f"Monde où prend place l'histoire : {Monde}"),
+        SystemMessage(content=f"Schéma narratif principal (à garder en mémoire) : {Shema_narratif_principal}"),
+        SystemMessage(content=f"Schéma narratif complémentaire (à garder en mémoire) : {Shema_complementaire_narratif}"),
+        SystemMessage(content=f"Liste des personnages (à garder en mémoire): {PersonnageDict}"),
+        SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown['1']['description']}"),
+        SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown['1']['titre']}"),
+        SystemMessage(content="N'oublie pas de respecter la cohérence avec les chapitres précédents et d'assurer la continuité de l'intrigue."),
+        HumanMessage(content="Écris le chapitre complet.")
     ]
-    msg = llm_with_tools.invoke(messageRecap)
-    chapitre["Recap"].append(msg.content)
-    return {"Recap": chapitre["Recap"]}
 
-def UpIndex(chapitre: ChapterState) -> str:
-    """Met à jour l'index du chapitre en cours."""
-    chapitre["Index"] += 1
-    print(f"Index : {chapitre['Index']}")
-    return {"Index": chapitre["Index"]}
+    messageBoucle = [
+        SystemMessage(content="Tu es un assistant narratif spécialisé en fiction."),
+        SystemMessage(content=f"Ta mission est d'écrire un chapitre entier du roman, en respectant la taille indiquée qui est de environ {struct_roman['caracteres_par_chapitre']} caractères."),
+        SystemMessage(content="Tu peux t'aider des outils à ta disposition pour accéder à tout élément utile (structure du roman, monde, personnages, schémas narratifs, description du chapitre, shema_complementaire_narratif, etc). N'hésite pas à les utiliser pour garantir la cohérence et la richesse du récit."),
+        SystemMessage(content=f"Tu écrit actuellement le chapitre numéro :"),
+        SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire :"),
+        SystemMessage(content=f"Titre du chapitre a écrire :") ,
+        SystemMessage(content=f"Résumer de l'emsemble des chapitres précédent écrit : "),
+        SystemMessage(content="Tu n'as le droit d'appeler les outils qu'une seule fois, si tu les as déjà appelés et que tu as une réponse, écris le chapitre avec les infos que tu as."),
+        SystemMessage(content=""),
+        SystemMessage(content="N'oublie pas de respecter la cohérence avec les chapitres précédents et d'assurer la continuité de l'intrigue."),
+        HumanMessage(content="Écris le chapitre complet.")
+    ]
 
-graph_builder = StateGraph(ChapterState)
+    class ChapterState(TypedDict, total=False):
+        """État du chapitre en cours d'écriture."""
+        Index: int  # Index du chapitre (par défaut 1)
+        Texte: List[str]
+        Recap: List[str]
+        messages: Annotated[list, add_messages]
 
-graph_builder.add_node("WriteTexteChapitre", WriteTexteChapitre)
-graph_builder.add_node("WriteRecapChapitre", WriteRecapChapitre)
-graph_builder.add_node("UpIndex", UpIndex)
 
-def boucle_decision(chapitre: ChapterState) -> str:
-    """Condition pour continuer ou arrêter l'écriture des chapitres."""
-    print(f"J'appelle boucle décision")
-    if chapitre["Index"] >= 5:
-        return "END"
-    else:
-        return "WriteTexteChapitre"
+    # Création des outils pour l'agent
 
-graph_builder.add_edge(START, "WriteTexteChapitre")
-graph_builder.add_edge("WriteTexteChapitre", "WriteRecapChapitre")
-graph_builder.add_edge("WriteRecapChapitre", "UpIndex")
-graph_builder.add_conditional_edges(
-    "UpIndex",
-    boucle_decision,
-    {"WriteTexteChapitre": "WriteTexteChapitre", "END": END}
-)
-graph_workflow = graph_builder.compile()
+    def get_struct_roman(input_str=None) -> str:
+        """Retourne la structure du roman sous forme de texte JSON formaté."""
+        return json.dumps(struct_roman, ensure_ascii=False, indent=2)
 
-display(Image(graph_workflow.get_graph().draw_mermaid_png()))
+    def get_monde(input_str=None) -> str:
+        """Retourne la description du monde sous forme de texte JSON formaté."""
+        return json.dumps(Monde, ensure_ascii=False, indent=2)
 
-chapter_state = graph_workflow.invoke({"Index": 0, "Texte": [], "Recap": []})
+    def get_shema_narratif_principal(input_str=None) -> str:
+        """Retourne le schéma narratif principal sous forme de texte JSON formaté."""
+        return json.dumps(Shema_narratif_principal, ensure_ascii=False, indent=2)
 
-full_chapter_path = "Sauvegarde/chapitres_full_texte.json"
-with open(full_chapter_path, "w", encoding="utf-8") as f:
-    json.dump(chapter_state['Texte'], f, ensure_ascii=False, indent=2)
-print(f"📖 Chapitres complets écrits et sauvegardés dans {full_chapter_path} !")
-print(f"{chapter_state['Texte']}")
+    def get_shema_complementaire_narratif(input_str=None) -> str:
+        """Retourne le schéma narratif complémentaire sous forme de texte JSON formaté."""
+        return json.dumps(Shema_complementaire_narratif, ensure_ascii=False, indent=2)
+
+    def get_personnages(input_str=None) -> str:
+        """Retourne la liste des personnages sous forme de texte JSON formaté."""
+        return json.dumps(PersonnageDict, ensure_ascii=False, indent=2)
+
+    def get_description_chapitre(nbchap: int = 0) -> str:
+        """Retourne la description du chapitre courant."""
+        return ChapitresPourMarkdown[str(nbchap + 1)]['description']
+
+    Tools = [
+        Tool(
+            name="AfficherStructureRoman",
+            func=lambda _: get_struct_roman(),
+            description="Affiche la structure du roman (struct_roman) au format JSON."
+        ),
+        Tool(
+            name="AfficherMonde",
+            func=lambda _: get_monde(),
+            description="Affiche la description du monde fictif (Monde) au format JSON."
+        ),
+        Tool(
+            name="AfficherSchemaNarratifPrincipal",
+            func=lambda _: get_shema_narratif_principal(),
+            description="Affiche le schéma narratif principal (Shema_narratif_principal) au format JSON."
+        ),
+        Tool(
+            name="AfficherSchemaNarratifComplementaire",
+            func=lambda _: get_shema_complementaire_narratif(),
+            description="Affiche le schéma narratif complémentaire (Shema_complementaire_narratif) au format JSON."
+        ),
+        Tool(
+            name="AfficherPersonnages",
+            func=lambda _: get_personnages(),
+            description="Affiche la liste des personnages (PersonnageDict) au format JSON."
+        ),
+        Tool(
+            name="AfficherDescriptionChapitre",
+            func=lambda x: get_description_chapitre(int(x)),
+            description="Affiche la description du chapitre dont le numéro est passé en argument (commence à 0)."
+        )
+    ]
+
+    llm_with_tools = model.bind_tools(Tools)
+
+    print(f"nb chap : {struct_roman['nombre_chapitres']}")
+
+    def WriteTexteChapitre(chapitre: ChapterState) -> dict:
+        """Écrit le texte du chapitre en cours."""
+        print(f"[WriteTexteChapitre] Début - Index chapitre : {chapitre['Index']}")
+        if chapitre["Index"] == 0:
+            print("[WriteTexteChapitre] Utilisation du message d'initialisation")
+            msg = llm_with_tools.invoke(messageInitialisation)
+        else:
+            print(f"[WriteTexteChapitre] Utilisation du message de boucle pour le chapitre {chapitre['Index']+1}")
+            messageBoucle[3] = SystemMessage(content=f"Tu écrit le chapitre numero : {chapitre['Index']+1}")
+            messageBoucle[4] = SystemMessage(content=f"Résumé rapide de l'idée principale du chapitre à écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['description']}")
+            messageBoucle[5] = SystemMessage(content=f"Titre du chapitre a écrire : {ChapitresPourMarkdown[str(chapitre['Index']+1)]['titre']}")
+            messageBoucle[6] = SystemMessage(content=f"Résumer de l'emsemble des chapitres précédent écrit : {chapitre['Recap']}")
+            
+            # ✅ MODIFIER : Prendre seulement les 2 derniers messages et les mettre en position 8
+            if chapitre.get("messages") and len(chapitre["messages"]) > 0:
+                derniers_messages = chapitre["messages"][-2:]  # ✅ Seulement les 2 derniers
+                # Créer une chaîne de contexte avec les 2 derniers messages
+                contexte_messages = ""
+                for i, msg in enumerate(derniers_messages):
+                    if hasattr(msg, 'content'):
+                        contexte_messages += f"Message {i+1}: {msg.content}\n"
+                
+                messageBoucle[8] = SystemMessage(content=f"Contexte des 2 derniers échanges:\n{contexte_messages}")
+            else:
+                messageBoucle[8] = SystemMessage(content="Pas de contexte précédent disponible.")
+
+            messageBoucle[7] = SystemMessage(content="ATTENTION, tu n'a le droit d'appeler les outils qu'une seule fois. Si tu as besoin d'informations complémentaires pour enrichir le chapitre, utilise les outils disponibles. Une fois que tu as toutes les informations nécessaires, écris le chapitre complet.")
+
+            msg = llm_with_tools.invoke(messageBoucle)
+        
+        has_tool_calls = hasattr(msg, 'tool_calls') and len(msg.tool_calls)
+
+        if not has_tool_calls:
+            print("[WriteTexteChapitre] Pas d'appel d'outil, ajout du texte du chapitre")
+            chapter_text = msg.content
+            chapitre["Texte"].append(chapter_text)
+            print(f"[WriteTexteChapitre] Texte du chapitre ajouté. Total chapitres écrits : {len(chapitre['Texte'])}")
+            return {"Texte": chapitre["Texte"], "messages": [msg]}
+        else:
+            print("[WriteTexteChapitre] Appel d'outil détecté, passage à l'étape suivante")
+            return {"Texte": chapitre["Texte"], "messages": [msg]}
+
+    def WriteRecapChapitre(chapitre: ChapterState) -> dict:
+        """Écrit le recapitulatif du chapitre en cours avec mémoire dédiée."""
+        print(f"[WriteRecapChapitre] Début - Index chapitre : {chapitre['Index']}")
+        messageRecap = [
+            SystemMessage(content="Tu es un assistant narratif spécialisé en fiction."),
+            SystemMessage(content="Ta mission est de générer un récapitulatif du chapitre écrit de 5 lignes grand maximum."),
+            HumanMessage(content=f"Voici le chapitre a résumer : {chapitre['Texte'][chapitre['Index']]}"),
+        ]
+        msg = model.invoke(messageRecap)
+        chapitre["Recap"].append(msg.content)
+        print(f"[WriteRecapChapitre] Récapitulatif ajouté. Total récapitulatifs : {len(chapitre['Recap'])}")
+        return {"Recap": chapitre["Recap"]}
+
+    def UpIndex(chapitre: ChapterState) -> dict:
+        """Met à jour l'index du chapitre en cours."""
+        chapitre["Index"] += 1
+        print(f"[UpIndex] Passage au chapitre suivant. Nouvel index : {chapitre['Index']}")
+        return {"Index": chapitre["Index"]}
+
+    tool_node = ToolNode(tools=Tools)
+
+    graph_builder = StateGraph(ChapterState)
+
+    graph_builder.add_node("WriteTexteChapitre", WriteTexteChapitre)
+    graph_builder.add_node("WriteRecapChapitre", WriteRecapChapitre)
+    graph_builder.add_node("UpIndex", UpIndex)
+    graph_builder.add_node("tools", tool_node)
+
+    def boucle_decision(chapitre: ChapterState) -> str:
+        """Condition pour continuer ou arrêter l'écriture des chapitres."""
+        print(f"J'appelle boucle décision")
+        if chapitre["Index"] >= struct_roman['nombre_chapitres']:
+            return "END"
+        else:
+            return "WriteTexteChapitre"
+        
+    def route_tool(chapitre: ChapterState) -> Literal["WriteRecapChapitre", "tools"]:
+        if len(chapitre["messages"][-1].tool_calls) == 0:
+            return "WriteRecapChapitre"
+        else:
+            return "tools"
+
+    graph_builder.add_edge(START, "WriteTexteChapitre")
+    graph_builder.add_conditional_edges(
+        "WriteTexteChapitre",
+        route_tool,
+        {"WriteRecapChapitre": "WriteRecapChapitre", "tools": "tools"}
+    )
+    graph_builder.add_edge("tools", "WriteTexteChapitre")
+    #graph_builder.add_edge("WriteTexteChapitre", "WriteRecapChapitre")
+    graph_builder.add_edge("WriteRecapChapitre", "UpIndex")
+    graph_builder.add_conditional_edges(
+        "UpIndex",
+        boucle_decision,
+        {"WriteTexteChapitre": "WriteTexteChapitre", "END": END}
+    )
+
+    graph_workflow = graph_builder.compile()
+
+    png_data = graph_workflow.get_graph().draw_mermaid_png()
+    with open("graph.png", "wb") as f:
+        f.write(png_data)
+    print("Graphe sauvegardé dans graph.png")
+
+    chapter_state = graph_workflow.invoke(
+        {"Index": 0, "Texte": [], "Recap": [],"messages": []},
+        config={"recursion_limit": 300}
+        )
+
+    with open(full_chapitre_path, "w", encoding="utf-8") as f:
+        json.dump(chapter_state['Texte'], f, ensure_ascii=False, indent=2)
+    print(f"📖 Chapitres complets écrits et sauvegardés dans {full_chapitre_path} !")

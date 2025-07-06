@@ -23,7 +23,7 @@ structure_romans = [
         "cadre": {"lieu": "Ville contemporaine", "temps": "Présent"},
         "nombre_chapitres": 15,
         "caracteres_par_chapitre": 5000,
-        "schema_principal": "SchemaNarratifFragmenté",
+        "schema_principal": "SchemaNarratifFragmente",
         "schema_complementaire": "SchemaNarratifFreytag",
     },
     {

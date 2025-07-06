@@ -1,42 +1,66 @@
 {
   "1": {
-    "titre": "L'Appel des Ancêtres",
-    "description": "Dans un petit village de Terra Nova, Kael, un jeune inventeur, découvre un ancien artefact qui pourrait changer le destin de son monde. Un soir, il reçoit un message mystérieux de son ancêtre, l'invitant à partir à l'aventure et à découvrir la vérité sur cet artefact."
+    "titre": "Les Cendres du Passé",
+    "description": "Alex, jeune habitant d'un village post-apocalyptique, découvre un ancien journal relatant une époque de prospérité. Cette découverte éveille en lui une curiosité insatiable pour le passé, l'incitant à remettre en question la société rigide dans laquelle il vit."
   },
   "2": {
-    "titre": "Le Poids du Passé",
-    "description": "Kael hésite à répondre à l'appel, craignant de laisser derrière lui sa famille et son atelier. Les doutes l'assaillent, mais une rencontre inattendue avec Elyndra, une sage elfe, lui donne le courage d'envisager son destin."
+    "titre": "Réminiscences Interdites",
+    "description": "En partageant le contenu du journal avec ses amis, Alex suscite un mélange d'intrigue et de peur. Le Conseil des Sages, qui gouverne le village, commence à surveiller de près cette nouvelle agitation parmi les jeunes."
   },
   "3": {
-    "titre": "La Forêt Enchantée",
-    "description": "Avec le soutien d'Elyndra, Kael franchit le seuil de son village et s'aventure dans une forêt enchantée. Là, il doit faire face à des créatures mystiques et surmonter ses peurs, découvrant les merveilles et les dangers de ce nouveau monde."
+    "titre": "Tempête de Doutes",
+    "description": "Alors qu'une tempête de sable frappe le village, Alex et ses amis se cachent dans un abri, discutant de l'avenir et de la possibilité d'un autre mode de vie. Les tensions au sein du groupe commencent à émerger."
   },
   "4": {
-    "titre": "Alliances Improbables",
-    "description": "Au cours de son périple, Kael rencontre Valen, un guerrier rebelle, et Lira, une sorcière au grand cœur. Ensemble, ils forment une alliance pour combattre les mercenaires de Kharak, le seigneur de guerre qui convoite l'artefact."
+    "titre": "Un Appel à l'Aventure",
+    "description": "Déterminé à découvrir la vérité, Alex décide de quitter le village pour explorer les ruines environnantes. Lena, Mara, et Jax choisissent de l'accompagner dans cette quête périlleuse."
   },
   "5": {
-    "titre": "La Quête des Lieux Oubliés",
-    "description": "Guidés par les légendes d'Elyndra, Kael et ses amis entreprennent un voyage vers des lieux oubliés, où ils découvrent des indices sur l'artefact. Chaque étape du voyage révèle des épreuves qui testent leur force et leur détermination."
+    "titre": "Vestiges du Monde Ancien",
+    "description": "Le groupe traverse des paysages désolés, découvrant les restes d'une civilisation autrefois florissante. Chaque ruine visitée ravive des fragments d'histoire et des émotions enfouies."
   },
   "6": {
-    "titre": "Le Visage de l'Ennemi",
-    "description": "La menace de Kharak se précise alors qu'il déploie ses forces pour s'emparer de l'artefact. Kael et ses amis doivent se préparer à une confrontation inévitable, tout en apprenant à travailler ensemble malgré leurs différences."
+    "titre": "Rencontres Hostiles",
+    "description": "En chemin, Alex et ses amis rencontrent des survivants hostiles qui voient en eux des menaces potentielles. Une confrontation tendue met en lumière les dangers constants de leur environnement."
   },
   "7": {
-    "titre": "Le Temple des Échos",
-    "description": "La quête atteint son paroxysme lorsque Kael et ses alliés infiltrent un ancien temple où les secrets de l'artefact sont cachés. Face à des énigmes et des gardiens mystiques, ils découvrent la vérité sur l'équilibre entre magie et technologie."
+    "titre": "Alliés Inattendus",
+    "description": "À la faveur du hasard, le groupe trouve refuge auprès d'une communauté partageant leur rêve d'un renouveau. Les échanges avec ces alliés renforcent leur détermination à poursuivre leur quête."
   },
   "8": {
-    "titre": "L'Affrontement Final",
-    "description": "Kael se retrouve face à face avec Kharak dans un combat épique. Ce duel ne se limite pas à la force physique, mais teste également la résolution de Kael et sa compréhension de son pouvoir. Le destin de Terra Nova est en jeu."
+    "titre": "Secrets et Trahisons",
+    "description": "De retour au village, Alex découvre que le Conseil des Sages a intensifié son contrôle. Des rumeurs de trahison déchirent les rangs des jeunes, mettant à l'épreuve leur loyauté et leur confiance."
   },
   "9": {
-    "titre": "La Sagesse de l'Ancien",
-    "description": "Après avoir vaincu Kharak, Kael découvre que l'artefact contient non seulement un immense pouvoir, mais aussi la sagesse nécessaire pour maintenir l'équilibre dans son monde. Cette révélation change la perception de son rôle."
+    "titre": "L'Éveil des Consciences",
+    "description": "Malgré l'oppression croissante, Alex continue de propager ses idées. Les jeunes du village commencent à envisager un avenir différent, semant les graines d'un changement latent."
   },
   "10": {
-    "titre": "Un Nouveau Départ",
-    "description": "De retour dans son village, Kael utilise les connaissances acquises pour améliorer la vie de ses concitoyens. En tant que leader, il enseigne l'importance de l'équilibre entre magie et technologie, amorçant une nouvelle ère pour Terra Nova."
+    "titre": "Le Poids du Savoir",
+    "description": "Mara, la guérisseuse du groupe, partage ses connaissances sur les plantes médicinales, révélant l'importance du savoir ancestral pour la survie. Son enseignement devient un acte de résistance."
+  },
+  "11": {
+    "titre": "Conflit et Résilience",
+    "description": "Le Conseil découvre les activités secrètes d'Alex et ses amis, menant à une confrontation publique. Le village est divisé entre ceux qui soutiennent le Conseil et ceux qui rêvent de changement."
+  },
+  "12": {
+    "titre": "L'Épreuve du Feu",
+    "description": "Alex est emprisonné pour ses idées subversives. Cependant, son emprisonnement ne fait qu'attiser la flamme de la rébellion parmi les jeunes du village."
+  },
+  "13": {
+    "titre": "Les Flammes de l'Espoir",
+    "description": "Lena et Jax orchestrent une évasion audacieuse pour libérer Alex. Leur succès galvanise la communauté, qui commence à se mobiliser pour un avenir plus juste."
+  },
+  "14": {
+    "titre": "La Vérité Dévoilée",
+    "description": "Tara, la gardienne des récits, utilise son talent pour partager l'histoire d'Alex et de sa quête. Son récit inspire et unit les villageois, transformant la peur en espoir."
+  },
+  "15": {
+    "titre": "Un Nouveau Commencement",
+    "description": "Bien que le Conseil reste en place, une nouvelle génération de villageois émerge, prête à bâtir une société plus équitable. Les idées d'Alex continuent de se répandre, promettant un changement à venir."
+  },
+  "16": {
+    "titre": "Le Cycle de l'Espoir",
+    "description": "Le village reste inchangé en apparence, mais les esprits ont évolué. Alex, devenu un symbole, contemple l'horizon avec la conviction que le renouveau est possible, fermant ainsi la boucle de son voyage."
   }
 }

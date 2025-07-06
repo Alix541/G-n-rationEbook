@@ -2,18 +2,52 @@ from typing import Optional, List
 from pydantic import BaseModel, Field
 
 class SchemaNarratifClassique(BaseModel):
-    situation_initiale: str = Field(..., description="Présentation des personnages, du lieu et du contexte avant le début de l’action.")
+    situation_initiale: str = Field(..., description="Présentation des personnages, du lieu et du contexte avant le début de l'action.")
     element_perturbateur: str = Field(..., description="Événement qui rompt l'équilibre initial et déclenche l'intrigue.")
     peripeties: str = Field(..., description="Ensemble des actions, obstacles et rebondissements qui compliquent la quête.")
     denouement: str = Field(..., description="Moment où le problème est résolu ou la tension se relâche.")
     situation_finale: str = Field(..., description="Nouvel équilibre trouvé, conséquence finale des événements du récit.")
 
+# ✅ CORRIGER les classes problématiques
+class SchemaNarratifInMediasRes(BaseModel):
+    debut_action: str = Field(..., description="Le récit commence au cœur de l'action, sans introduction préalable.")
+    retours_arriere: str = Field(..., description="Des flashbacks ou retours en arrière qui expliquent le contexte et les événements passés.")
+    escalade_conflits: str = Field(..., description="Progression des conflits ou des obstacles qui intensifient la tension dramatique.")
+    climax: str = Field(..., description="Le point culminant du récit, moment de tension maximale ou de révélation.")
+    resolution: str = Field(..., description="Dénouement et résolution des conflits, retour à un nouvel équilibre.")
+
+class SchemaNarratifFlashback(BaseModel):
+    situation_initiale: str = Field(..., description="Présentation d'une situation actuelle qui suscite une question ou un mystère.")
+    retour_passe: str = Field(..., description="Plongée dans le passé pour révéler les événements ayant conduit à la situation présente.")
+    developpement_passe: str = Field(..., description="Déroulement des événements passés avec leurs conflits et enjeux.")
+    retour_present: str = Field(..., description="Retour à la situation actuelle, souvent avec une nouvelle compréhension ou révélation.")
+    resolution: str = Field(..., description="Résolution de la problématique initiale à la lumière des informations passées.")
+
+class SchemaNarratifStructure3Actes(BaseModel):
+    acte_exposition: str = Field(..., description="Introduction des personnages, du contexte et de la situation initiale.")
+    acte_conflit: str = Field(..., description="Développement des conflits, obstacles et tensions qui empêchent le protagoniste d'atteindre son but.")
+    acte_resolution: str = Field(..., description="Climax suivi de la résolution des conflits et du retour à un nouvel équilibre.")
+
+class SchemaNarratifCadre(BaseModel):
+    situation_initiale: str = Field(..., description="Contexte du narrateur principal, qui introduit le récit secondaire.")
+    debut_recit: str = Field(..., description="Introduction du récit enchâssé (personnage ou histoire dans l'histoire).")
+    developpement_recit: str = Field(..., description="Péripéties ou progression du récit enchâssé.")
+    fin_recit: str = Field(..., description="Clôture du récit intérieur.")
+    situation_finale: str = Field(..., description="Retour au récit cadre, souvent modifié par le récit secondaire.")
+
+class SchemaNarratifEpistolaire(BaseModel):
+    introduction_narrateur: str = Field(..., description="Présentation du narrateur qui compile ou transmet les lettres.")
+    alternance_voix: str = Field(..., description="Successions de points de vue ou d'auteurs via lettres/journaux.")
+    evolution_rapports: str = Field(..., description="Relations entre personnages qui évoluent à travers l'écriture.")
+    effet_reel: str = Field(..., description="Impression d'intimité et d'authenticité créée par le support épistolaire.")
+
+# ✅ Garder les autres classes qui sont OK
 class SchemaActanciel(BaseModel):
     sujet: str = Field(..., description="Personnage principal ou héros qui agit dans le récit.")
     objet: str = Field(..., description="But ou objectif poursuivi par le sujet.")
     adjuvant: str = Field(..., description="Personne, objet ou force qui aide le sujet dans sa quête.")
-    opposant: str = Field(..., description="Personne, obstacle ou force qui s’oppose au sujet.")
-    destinateur: str = Field(..., description="Source de la mission ou de l’appel à l’action du sujet.")
+    opposant: str = Field(..., description="Personne, obstacle ou force qui s'oppose au sujet.")
+    destinateur: str = Field(..., description="Source de la mission ou de l'appel à l'action du sujet.")
     destinataire: str = Field(..., description="Celui ou celle qui bénéficie de la quête, parfois le sujet lui-même.")
 
 class SchemaQuinaire(BaseModel):
@@ -33,20 +67,13 @@ class SchemaDramatique(BaseModel):
 
 class VoyageDuHeros(BaseModel):
     appel_aventure: str = Field(..., description="Invitation à quitter le monde ordinaire pour une quête.")
-    refus_appel: str = Field(..., description="Hésitation ou peur initiale du héros face à l’aventure.")
+    refus_appel: str = Field(..., description="Hésitation ou peur initiale du héros face à l'aventure.")
     rencontre_mentor: str = Field(..., description="Rencontre avec un guide ou mentor qui apporte des conseils ou des outils.")
     passage_seuil: str = Field(..., description="Entrée dans un monde inconnu ou début effectif de la quête.")
     epreuves_allies_ennemis: str = Field(..., description="Rencontres marquantes, combats, soutiens et oppositions.")
     epreuve_centrale: str = Field(..., description="Moment de crise ou épreuve décisive du héros (abysse).")
-    recompense: str = Field(..., description="Ce que le héros gagne après avoir surmonté l’épreuve.")
-    retour_transforme: str = Field(..., description="Retour dans le monde ordinaire, changé par l’expérience.")
-
-class SchemaNarratifCadre(BaseModel):
-    situation_narrative_initiale: str = Field(..., description="Contexte du narrateur principal, qui introduit le récit secondaire.")
-    debut_recit_interieur: str = Field(..., description="Introduction du récit enchâssé (personnage ou histoire dans l’histoire).")
-    developpement_recit_interieur: str = Field(..., description="Péripéties ou progression du récit enchâssé.")
-    fin_recit_interieur: str = Field(..., description="Clôture du récit intérieur.")
-    situation_narrative_finale: str = Field(..., description="Retour au récit cadre, souvent modifié par le récit secondaire.")
+    recompense: str = Field(..., description="Ce que le héros gagne après avoir surmonté l'épreuve.")
+    retour_transforme: str = Field(..., description="Retour dans le monde ordinaire, changé par l'expérience.")
 
 class SchemaNarratifFreytag(BaseModel):
     exposition: str = Field(..., description="Mise en place du contexte, des personnages et des enjeux.")
@@ -60,16 +87,10 @@ class SchemaNarratifCirculaire(BaseModel):
     parcours: str = Field(..., description="Suite d’événements formant une boucle narrative.")
     retour_final: str = Field(..., description="Retour au point de départ, avec ou sans évolution du personnage.")
 
-class SchemaNarratifFragmenté(BaseModel):
+class SchemaNarratifFragmente(BaseModel):
     fragments: str = Field(..., description="Fragments narratifs séparés : souvenirs, scènes disjointes, temporalités multiples.")
     connexion_progressive: str = Field(..., description="Liaisons qui émergent entre les fragments au fil du récit.")
     revelation_finale: str = Field(..., description="Éclaircissement global ou chute révélatrice reliant les fragments.")
-
-class SchemaNarratifEpistolaire(BaseModel):
-    introduction_narrateur: str = Field(..., description="Présentation du narrateur qui compile ou transmet les lettres.")
-    alternance_voix: str = Field(..., description="Successions de points de vue ou d’auteurs via lettres/journaux.")
-    evolution_des_rapports: str = Field(..., description="Relations entre personnages qui évoluent à travers l’écriture.")
-    effet_reel: str = Field(..., description="Impression d’intimité et d’authenticité créée par le support épistolaire.")
 
 class SchemaNarratifHorreur(BaseModel):
     exposition: str = Field(..., description="Présentation du décor, souvent inquiétant.")
@@ -77,30 +98,6 @@ class SchemaNarratifHorreur(BaseModel):
     escalade: str = Field(..., description="Tensions et attaques s’intensifient.")
     affrontement_final: str = Field(..., description="Confrontation ultime avec la menace.")
     chute: str = Field(..., description="Fin souvent ouverte ou ambigüe, avec trace durable de la peur.")
-
-class SchemaNarratifInMediasRes(BaseModel):
-    debut_en_milieu_d_action: str = Field(...,description="Le récit commence au cœur de l'action, sans introduction préalable.")
-    retours_en_arriere: str = Field(...,description="Des flashbacks ou retours en arrière qui expliquent le contexte et les événements passés.")
-    escalade_des_conflits: str = Field(...,description="Progression des conflits ou des obstacles qui intensifient la tension dramatique.")
-    climax: str = Field(...,description="Le point culminant du récit, moment de tension maximale ou de révélation.")
-    resolution: str = Field(...,description="Dénouement et résolution des conflits, retour à un nouvel équilibre.")
-
-class SchemaNarratifFlashback(BaseModel):
-    situation_initiale: str = Field(...,description="Présentation d’une situation actuelle qui suscite une question ou un mystère.")
-    retour_en_arriere: str = Field(...,description="Plongée dans le passé pour révéler les événements ayant conduit à la situation présente.")
-    developpement_du_passé: str = Field(...,description="Déroulement des événements passés avec leurs conflits et enjeux.")
-    retour_au_present: str = Field(...,description="Retour à la situation actuelle, souvent avec une nouvelle compréhension ou révélation.")
-    resolution: str = Field(...,description="Résolution de la problématique initiale à la lumière des informations passées.")
-
-class SchemaNarratifStructure3Actes(BaseModel):
-    acte_1_exposition: str = Field(...,description="Introduction des personnages, du contexte et de la situation initiale.")
-    acte_2_conflit: str = Field(...,description="Développement des conflits, obstacles et tensions qui empêchent le protagoniste d’atteindre son but.")
-    acte_3_resolution: str = Field(...,description="Climax suivi de la résolution des conflits et du retour à un nouvel équilibre.")
-
-class SchemaNarratifStructureAbsurde(BaseModel):
-    situation_incoherente: str = Field(...,description="Présentation d’une situation ou d’un monde dépourvu de logique apparente.")
-    actions_deroutantes: str = Field(...,description="Enchaînement d’événements ou de comportements irrationnels, souvent sans lien de cause à effet clair.")
-    absence_de_resolution: str = Field(...,description="Fin ouverte, incompréhensible ou circulaire, soulignant l’absurdité ou l’absence de sens du récit.")
 
 class SchemaNarratifRomanPolicier(BaseModel):
     situation_initiale: str = Field(...,description="Présentation du contexte, de la scène du crime et des premières informations sur l’affaire (qui ? quoi ? quand ? où ?). Certaines questions peuvent rester sans réponse, comme l’identité du criminel ou son mobile.")

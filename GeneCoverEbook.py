@@ -107,7 +107,7 @@ else:
         tools=[
             {
                 "type": "image_generation",
-                "quality": "low",
+                "quality": "high",
                 "size": "1024x1536",
                 "output_format": "png",
             }
